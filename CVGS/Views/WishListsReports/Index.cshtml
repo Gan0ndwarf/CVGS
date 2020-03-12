@@ -1,0 +1,66 @@
+﻿@model IEnumerable<CVGS.Models.WishListReportsModel>
+@{
+    ViewData["Title"] = "Wish Lists Reports";
+}
+@{
+    ViewData["dateTime"] = DateTime.Now;
+}
+
+@using Microsoft.AspNetCore.Http
+@{
+    if (Context.Session.GetString("isEmp") == "True")
+    {
+        <div class="container no-padding">
+            <div class="row">
+                <div class="col-md-3">
+                    @await Html.PartialAsync("_AdminPortalNavBar")
+                </div>
+                <div class="col-md-9">
+                    <div class="container">
+                        <div class="row">
+                            <h1 id="wishlistsreports-header">@ViewData["Title"]</h1>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Game)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UserCount)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Game.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UserCount)
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    @ViewData["dateTime"]
+
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <h1>Forbidden</h1>
+        <p>You are not authorized to access this feature of the website.</p>
+        <a asp-controller="Home" asp-action="Index">Back to Home</a>
+    }
+}
+
+

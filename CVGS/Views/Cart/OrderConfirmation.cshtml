@@ -1,0 +1,64 @@
+﻿@model IEnumerable<CVGS.Models.Game>
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Order Confirmation";
+}
+
+<div class="container">
+    <div class="row">
+        <h1>@ViewData["Title"]</h1>
+    </div>
+</div>
+<div class="container no-padding">
+    @foreach (var item in Model)
+    {
+        <h4> @Html.DisplayFor(modelItem => item.Name)</h4>
+        <div class="row">
+            <div class="col-md-4" style="margin:0">
+                <img src="~/@Html.DisplayFor(modelItem => item.ImgLocation)" alt="@Html.DisplayFor(modelItem => item.ImgLocation)" style="width: 100%; height: auto;">
+            </div>
+            <div class="col-md-6">
+                <dl>
+                    <dt>
+                        @Html.DisplayNameFor(modelItem => item.Category.Category)
+                    </dt>
+                    <dd style="padding-bottom:0.5em;">
+                        @Html.DisplayFor(modelItem => item.Category.Category)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(modelItem => item.Platform)
+                    </dt>
+                    <dd style="padding-bottom:0.5em;">
+                        @Html.DisplayFor(modelItem => item.Platform.Platform)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(modelItem => item.ReleaseDate)
+                    </dt>
+                    <dd style="padding-bottom:0.5em;">
+                        @Html.DisplayFor(modelItem => item.ReleaseDate)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(modelItem => item.Description)
+                    </dt>
+                    <dd style="padding-bottom:0.5em;">
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(modelItem => item.Developer)
+                    </dt>
+                    <dd style="padding-bottom:0.5em;">
+                        @Html.DisplayFor(modelItem => item.Developer)
+                    </dd>
+                </dl>
+            </div>
+            <div class="col-md-2">
+                <h4>Download your game at the link below:</h4>
+                <a class="btn btn-info" asp-action="DownloadGame" width="25%;" onclick="javascript:window.location='/output.txt'">Download</a>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+

@@ -1,0 +1,92 @@
+﻿@model IEnumerable<CVGS.Models.Game>
+@{
+    ViewData["Title"] = "Games Page";
+}
+
+@using Microsoft.AspNetCore.Http
+@{
+    Int32? userId = null;
+    if (Context.Session.GetString("userId") != null)
+    {
+        userId = Convert.ToInt32(Context.Session.GetString("userId"));
+    }
+    else if (Context.Session.GetString("empId") != null)
+    {
+        userId = Convert.ToInt32(Context.Session.GetString("empId"));
+    }
+}
+
+<div class="container">
+    <div class="row">
+        <h1 id="gamespage-header">@ViewData["Title"]</h1>
+    </div>
+</div>
+<div class="container no-padding">
+    <div class="row">
+        <div class="col-md-3" id="filterPanel">
+            <form asp-action="Index">
+
+                <h5>Search Games</h5>
+                <hr />
+
+                @using (Html.BeginForm())
+                {
+                    <div class="form-group">
+                        <label for="Title">Search By Name</label>
+                        @Html.TextBox("SearchString", "", new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label for="Platform" class="control-label"></label>
+                        @Html.DropDownList("platformId", (SelectList)ViewBag.PlatformList, "-- --", new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label for="Platform" class="control-label"></label>
+                        @Html.DropDownList("categoryId", (SelectList)ViewBag.CategoryList, "-- --", new { @class = "form-control" })
+                    </div>
+                    <input class="form-control" type="submit" value="Search" />
+                }
+            </form>
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-4">
+                        <div class="card">
+                            @if (item.ImgLocation != null)
+                            {
+                                <img class="card-img-top" src="@Html.DisplayFor(modelItem => item.ImgLocation)"
+                                     alt="@Html.DisplayFor(modelItem => item.ImgLocation)">
+                            }
+                            else
+                            {
+                                <img class="card-img-top" src="~/images/no_image_found.png"
+                                     alt="No Image Found">
+                            }
+
+                            <div class="card-body">
+                                <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
+                                <h6 class="card-title">@Html.DisplayFor(modelItem => item.Price)</h6>
+                                <h6 class="card-title">@Html.DisplayFor(modelItem => item.Platform.Platform)</h6>
+                                <h6 class="card-title">
+                                    @if (item.Rating != null)
+                                    {
+                                        @Html.DisplayFor(modelItem => item.Rating)
+                                    }
+                                    else
+                                    {
+                                        <span style="font-style:italic;">Unrated</span>
+                                    }
+                                </h6>
+                                <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
+                                <p class="card-text">@Html.DisplayFor(modelItem => item.Category.Category)</p>
+                                <a class="btn btn-primary" asp-action="Details" asp-route-gameId="@item.GameId" asp-route-userId="@userId" id="gamelink-@item.GameId">Find out more</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

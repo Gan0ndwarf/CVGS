@@ -1,0 +1,40 @@
+﻿@model UserCategoryFavouriteCategory;
+@{
+    ViewData["Title"] = "Add Favourite Category";
+}
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+
+
+<div class="container">
+    <div class="row">
+        <h1>@ViewData["Title"]</h1>
+    </div>
+</div>
+<div class="container no-padding">
+    <div class="row">
+        <div class="col-md-3">
+            @await Html.PartialAsync("_MemberAccountNavBar")
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <form asp-action="AddCategoryPreference" method="post">
+                    <input type="hidden" asp-for="UserId" value="@UserManager.GetUserId(User)" />
+                    <h4>Select Platform</h4>
+                    <hr />
+
+                    @using (Html.BeginForm())
+                    {
+                        <div class="form-group">
+                            <label for="Platform" class="control-label"></label>
+                            @Html.DropDownList("categoryId", (SelectList)ViewBag.CategoryList, "-- --", new { @class = "form-control" })
+                        </div>
+                        <input class="form-control" type="submit" value="Add" style="width:25%;" />
+                    }
+                </form>
+                <br />
+                <a asp-action="Preferences">Back to Preferences</a>
+            </div>
+        </div>
+    </div>
+</div>
+

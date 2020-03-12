@@ -1,0 +1,56 @@
+﻿@model UserUserFriendList;
+@using Microsoft.AspNetCore.Http;
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Add Friend to 'Friends and Family List'";
+}
+
+<div class="container">
+    <div class="row">
+        <h1>@ViewData["Title"]</h1>
+    </div>
+</div>
+<div class="container no-padding">
+    <div class="row">
+        <div class="col-md-3">
+            @await Html.PartialAsync("_MemberAccountNavBar")
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <dl class="dl-horizontal" style="text-align:left;">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Friend.Username)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Friend.Username)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Friend.FirstName)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Friend.FirstName)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Friend.LastName)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Friend.LastName)
+                    </dd>
+                </dl>
+
+                <form asp-action="AddFriendsFamily" method="post">
+                    <input type="hidden" asp-for="UserId" />
+                    <input type="hidden" asp-for="FriendId" />
+                    <input type="submit" value="Add" class="btn btn-default" /> |
+
+                    <a asp-action="FriendsFamily">Back to Friends and Family</a>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <a asp-action="Preferences">Back to Preferences</a>
+</div>
+
+
+

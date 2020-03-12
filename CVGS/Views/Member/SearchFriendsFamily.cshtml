@@ -1,0 +1,63 @@
+﻿@model IEnumerable<CVGS.Models.User>
+@{
+    ViewData["Title"] = "Search Friends and Family";
+}
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+
+
+<div class="container">
+    <div class="row">
+        <h1 id="searchfriendsfamily-header">@ViewData["Title"]</h1>
+    </div>
+</div>
+<div class="container no-padding">
+    <div class="row">
+        <div class="col-md-2" id="filterPanel">
+            <form asp-action="SearchFriendsFamily">
+
+                <h5>Search Friends</h5>
+                <hr />
+
+                @using (Html.BeginForm())
+                {
+                    <div class="form-group">
+                        <label for="Title">Search By Name</label>
+                        @Html.TextBox("SearchString", "", new { @class = "form-control" })
+                    </div>
+                    <input class="form-control" type="submit" value="Search" />
+                }
+            </form>
+        </div>
+        <div class="col-md-9 col-md-offset-1">
+            <div class="row">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Full Name</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Username)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FirstName) ,  @Html.DisplayFor(modelItem => item.LastName)
+                                </td>
+                                <td>
+                                    <a asp-action="AddFriendsFamily" asp-route-friendId="@item.UserId" asp-route-userId="@UserManager.GetUserId(User)">Add to Friends and Family</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <a asp-action="FriendsFamily">Back to Friends and Family</a>
+            </div>
+        </div>
+    </div>
+</div>
+

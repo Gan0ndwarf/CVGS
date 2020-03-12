@@ -1,0 +1,34 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Administration Portal";
+}
+
+
+@using Microsoft.AspNetCore.Http
+@{
+    if (Context.Session.GetString("isEmp") == "True")
+    {
+        <div class="container">
+            <div class="row">
+                <h1>@ViewData["Title"]</h1>
+            </div>
+        </div>
+        <div class="container no-padding">
+            <div class="row">
+                <div class="col-md-3">
+                    @await Html.PartialAsync("_AdminPortalNavBar")
+                </div>
+                <div class="col-md-9">
+                    <p>Welcome, @UserManager.GetUserName(User)!</p>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <h1>Forbidden</h1>
+        <p>You are not authorized to access this feature of the website.</p>
+        <a asp-controller="Home" asp-action="Index">Back to Home</a>
+    }
+}

@@ -1,0 +1,54 @@
+﻿@model IEnumerable<CVGS.Models.UserGameWishList>
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Wish List";
+}
+
+<div class="container">
+    <div class="row">
+        <h1 id="wishlist-header">@ViewData["Title"]</h1>
+    </div>
+</div>
+<div class="container no-padding">
+    <div class="row">
+        <div class="col-md-3">
+            @await Html.PartialAsync("_MemberAccountNavBar")
+        </div>
+        <div class="col-md-9">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Game)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Game.Name)
+                            </td>
+                            <td>
+                                <a asp-controller="Games" asp-action="Details" asp-route-gameId="@item.GameId" asp-route-userId="@UserManager.GetUserId(User)">Details</a> |
+                                <a asp-action="DeleteWishListItem" asp-route-gameId="@item.GameId" asp-route-userId="@UserManager.GetUserId(User)">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @if (Model.Count<CVGS.Models.UserGameWishList>() == 0)
+            {
+                <p style="font-style: italic;">Your have no games on your wishlist.</p>
+                <br />
+                <p>Can't find anything you like? Check out our <a asp-controller="Games" asp-action="Index">Games page</a> for great games.</p>
+            }
+            else
+            {
+                <p>Check out our <a asp-controller="Games" asp-action="Index">Games page</a> for more great games.</p>
+            }
+        </div>
+    </div>
+</div>

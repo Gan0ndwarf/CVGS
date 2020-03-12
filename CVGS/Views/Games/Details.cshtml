@@ -1,0 +1,209 @@
+﻿@model CVGS.Models.GameModel
+@using Microsoft.AspNetCore.Http
+
+@{
+    ViewData["Title"] = "Game Details";
+}
+
+
+@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> SignInManager
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+
+<h2>@Html.DisplayFor(model => model.Game.Name)</h2>
+<h4 id="gamedetails-header">@ViewData["Title"]</h4>
+<hr />
+<div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <img src="~/@Html.DisplayFor(model => model.Game.ImgLocation)" alt="@Html.DisplayFor(model => model.Game.ImgLocation)" style="width: 100%; height: auto;">
+        </div>
+        <div class="col-md-6">
+            <dl class="dl-horizontal" style="text-align:left;">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Game.Category)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Game.Category.Category)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Game.Platform)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Game.Platform.Platform)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Game.ReleaseDate)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Game.ReleaseDate)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Game.Description)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Game.Description)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Game.Developer)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Game.Developer)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.OverallRating) 
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.OverallRating) / 5.00 
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Game.Price)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Game.Price)
+                </dd>
+            </dl>
+
+            @if (Context.Session.GetString("userId") != null)
+            {
+            <div class="d-inline">
+                @if (!Model.Purchased)
+                {
+                    @if (!Model.InCart)
+                    {
+                        <a class="btn btn-info " asp-action="AddToCart" asp-route-userId="@UserManager.GetUserId(User)" asp-route-gameId="@Context.Session.GetString("gameId")" style="width: 45%; margin-right:1em;" id="addtocart-button">Add to Cart</a>
+                    }
+                    else
+                    {
+                        <button class="btn btn-default" style="width: 45%;" disabled>Added to Cart</button>
+                    }
+                    @if (!Model.OnWishList)
+                    {
+                        <a class="btn btn-info" asp-action="AddToWishList" asp-route-userId="@UserManager.GetUserId(User)" asp-route-gameId="@Context.Session.GetString("gameId")" style="width: 45%;" id="addtowishlist-button">Add to Wish List</a>
+                    }
+                    else
+                    {
+                        <button class="btn btn-default" style="width: 45%;" disabled>Added to Wish List</button>
+                    }
+                }
+                else
+                {
+                    <p>You have already purchased this game. Download it <a asp-controller="Member" asp-action="MyGames">in "MyGames" in your Account Settings.</a></p>
+                }
+            </div>
+            }
+            else
+            {
+                <p>You must log in to add game to cart, or add it to your wishlist.</p>
+                <div class="d-inline">
+                    <a class="btn btn-default" disabled style="width: 45%; margin-right:1em;">Add to Cart</a>
+                    <a class="btn btn-default" disabled style="width: 45%;">Add to Wish List</a>
+                </div>
+            }
+        </div>
+    </div>
+
+    <hr />
+    <h4>Your Review</h4>
+    @if (Context.Session.GetString("userId") != null)
+    {
+        <div>
+            @if (Model.UserReview == null)
+            {
+                <a asp-action="RateGame" asp-route-gameId="@Html.DisplayFor(model => model.Game.GameId)" asp-route-userId="@UserManager.GetUserId(User)" id="rategame-link">Add your review.</a>
+            }
+            else if (Model.UserReview.ApprovedFlag == false)
+            {
+                <p>Your review is under approval.</p>
+            }
+            else
+            {
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.UserReview.Rating)
+                    </dt>
+                    <dd>          
+                        <div class="d-inline">
+                            @for (int i = 0; i < Model.UserReview.Rating; i++)
+                            {
+                                <img src="~/images/star.png" alt="Rating" style="width:20px;" />
+                            }
+                            <span style="padding-top:5px;"> - @Model.UserReview.Rating stars</span>
+                        </div>
+
+                    </dd>
+                    <dt>
+                        Review
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.UserReview.Review1)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.UserReview.Date)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.UserReview.Date)
+                    </dd>
+                </dl>
+
+                <div class="d-inline" style="margin-left: 45vw;">
+                    <a asp-action="EditReview" asp-route-gameId="@Model.UserReview.GameId" asp-route-userId="@Model.UserReview.UserId" id="editreview-link">
+                        Edit Review
+                    </a> |
+
+                    <a asp-action="DeleteReview" asp-route-gameId="@Model.UserReview.GameId" asp-route-userId="@Model.UserReview.UserId" id="deletereview-link">
+                        Delete Review
+                    </a>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>You must be logged in to rate a game.</p>
+        <a asp-controller="Account" asp-action="Login">Login here</a>
+    }
+
+    <hr />
+    <h4>Reviews</h4>
+    <div style="width:100%; height: 30vh; overflow-y:auto;">
+        @foreach (var item in Model.Reviews)
+        {
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(modelItem => item.User.Username)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(modelItem => item.User.Username)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(modelItem => item.Rating)
+                </dt>
+                <dd>
+                    <div class="d-inline">
+                        @for (int i = 0; i < item.Rating; i++)
+                        {
+                            <img src="~/images/star.png" alt="Rating" style="width:20px;" />
+                        }
+                        <span style="padding-top:5px;"> - @item.Rating stars</span>
+                    </div>
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(modelItem => item.Review1)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(modelItem => item.Review1)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(modelItem => item.Date)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </dd>
+            </dl>
+        }
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

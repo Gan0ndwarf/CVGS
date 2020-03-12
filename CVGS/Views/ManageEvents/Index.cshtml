@@ -1,0 +1,71 @@
+﻿@model IEnumerable<CVGS.Models.Event>
+@{
+    ViewData["Title"] = "Manage Events";
+}
+
+
+@using Microsoft.AspNetCore.Http
+@{
+    if (Context.Session.GetString("isEmp") == "True")
+    {
+        <div class="container">
+            <div class="row">
+                <h1 id="manageevents-header">@ViewData["Title"]</h1>
+            </div>
+        </div>
+        <div class="container no-padding">
+            <div class="row">
+                <div class="col-md-3">
+                    @await Html.PartialAsync("_AdminPortalNavBar")
+                </div>
+                <div class="col-md-9">
+                    <p>
+                        <a asp-action="Create" id="create-link">Create New</a>
+                    </p>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Description</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Date)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Time)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                        <a asp-action="Details" asp-route-id="@item.EventId" id="detailslink-@item.EventId">Details</a> |
+                                        <a asp-action="Edit" asp-route-id="@item.EventId"  id="editlink-@item.EventId">Edit</a> |
+                                        <a asp-action="Delete" asp-route-id="@item.EventId"  id="deletelink-@item.EventId">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <h1>Forbidden</h1>
+        <p>You are not authorized to access this feature of the website.</p>
+        <a asp-controller="Home" asp-action="Index">Back to Home</a>
+    }
+}
+

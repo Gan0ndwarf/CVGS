@@ -1,0 +1,76 @@
+﻿@model IEnumerable<CVGS.Models.Order>
+
+@{
+    ViewData["Title"] = "Sales Reports";
+}
+@{
+    ViewData["dateTime"] = DateTime.Now;
+}
+
+@using Microsoft.AspNetCore.Http
+@{
+    if (Context.Session.GetString("isEmp") == "True")
+    {
+        <div class="row">
+            <div class="col-md-3">
+                @await Html.PartialAsync("_AdminPortalNavBar")
+            </div>
+            <div class="col-md-9">
+                <h1 id="salesreports-header">@ViewData["Title"]</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Buyer Full Name
+                            </th>
+                            <th>
+                                Buyer Email
+                            </th>
+                            <th>
+                                Total
+                            </th>
+                            <th>
+                                Game Name
+                            </th>
+                            <th>
+                                Date Purchased
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.LastName),  @Html.DisplayFor(modelItem => item.User.FirstName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Game.Price)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Game.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Date)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                @ViewData["dateTime"]
+            </div>
+        </div>
+    }
+    else
+    {
+        <h1>Forbidden</h1>
+        <p>You are not authorized to access this feature of the website.</p>
+        <a asp-controller="Home" asp-action="Index">Back to Home</a>
+    }
+}
+
+

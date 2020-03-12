@@ -1,0 +1,51 @@
+﻿@model IEnumerable<CVGS.Models.UserUserFriendList>
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Friends and Family";
+}
+
+<div class="container">
+    <div class="row">
+        <h1 id="friendsfamily-header">@ViewData["Title"]</h1>
+    </div>
+</div>
+<div class="container no-padding">
+    <div class="row">
+        <div class="col-md-3">
+            @await Html.PartialAsync("_MemberAccountNavBar")
+        </div>
+        <div class="col-md-9">
+            <a asp-action="SearchFriendsFamily" asp-route-userId="@UserManager.GetUserId(User)" id="searchfriendsfamily-link">Add A Friend</a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Full Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Friend.Username)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Friend.FirstName) ,  @Html.DisplayFor(modelItem => item.Friend.LastName)
+                            </td>
+                            <td>
+                                <a asp-action="FriendsWishList" asp-route-friendId="@item.FriendId" id="friendsfamilywishlist-link">See Their Wishlist</a> |
+                                <a asp-action="DeleteFriendFamily" asp-route-userId="@UserManager.GetUserId(User)" asp-route-friendId="@item.FriendId">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @if (Model.Count<CVGS.Models.UserUserFriendList>() == 0)
+            {
+                <p style="font-style: italic;">Click "Add Friends and Family" to add to your 'Friends and Family' list.</p>
+            }
+        </div>
+    </div>
+</div>

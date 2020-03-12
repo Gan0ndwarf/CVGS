@@ -1,0 +1,57 @@
+﻿@model IEnumerable<CVGS.Models.Order>
+@{
+    ViewData["Title"] = "My Games";
+}
+
+    <div class="container">
+        <div class="row">
+            <h1 id="mygames-header">@ViewData["Title"]</h1>
+        </div>
+    </div>
+    <div class="container no-padding">
+        <div class="row">
+            <div class="col-md-3">
+                @await Html.PartialAsync("_MemberAccountNavBar")
+            </div>
+            <div class="col-md-9">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Game</th>
+                            <th>Purchase Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Game.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                            <td>
+                                <a asp-action="MyGameDetails" asp-route-orderId="@item.OrderId">Details</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-info" asp-controller="Cart" asp-action="DownloadGame" width="25%;" onclick="javascript:window.location='/output.txt'">Download</a>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+                @if (Model.Count<CVGS.Models.Order>() == 0)
+                {
+                    <p style="font-style: italic;">Your have no purchased games.</p>
+                    <br />
+                    <p>Can't find anything you like? Check out our <a asp-controller="Games" asp-action="Index">Games page</a> for great games.</p>
+                }
+                else
+                {
+                    <p>Check out our <a asp-controller="Games" asp-action="Index">Games page</a> for more great games.</p>
+                }
+            </div>
+        </div>
+    </div>

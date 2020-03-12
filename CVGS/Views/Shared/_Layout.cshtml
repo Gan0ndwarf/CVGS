@@ -1,0 +1,293 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CVGS</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.css" asp-append-version="true" />
+    </environment>
+
+    <style>
+        .carousel-inner > .item > img {
+            width: 100%;
+            height: 60vh;
+        }
+
+        #content {
+            padding-top: 4vh;
+        }
+
+        .navbar-brand {
+            height: auto;
+        }
+
+        .no-padding {
+            padding: 0;
+        }
+
+        .glyphicon-icon-rpad .glyphicon, .glyphicon-icon-rpad .glyphicon.m8, .fa-icon-rpad .fa, .fa-icon-rpad .fa.m8 {
+            padding-right: 8px;
+        }
+
+        .glyphicon-icon-lpad .glyphicon, .glyphicon-icon-lpad .glyphicon.m8, .fa-icon-lpad .fa, .fa-icon-lpad .fa.m8 {
+            padding-left: 8px;
+        }
+
+        .glyphicon-icon-rpad .glyphicon.m5, .fa-icon-rpad .fa.m5 {
+            padding-right: 5px;
+        }
+
+        .glyphicon-icon-lpad .glyphicon.m5, .fa-icon-lpad .fa.m5 {
+            padding-left: 5px;
+        }
+
+        .glyphicon-icon-rpad .glyphicon.m12, .fa-icon-rpad .fa.m12 {
+            padding-right: 12px;
+        }
+
+        .glyphicon-icon-lpad .glyphicon.m12, .fa-icon-lpad .fa.m12 {
+            padding-left: 12px;
+        }
+
+        .glyphicon-icon-rpad .glyphicon.m15, .fa-icon-rpad .fa.m15 {
+            padding-right: 15px;
+        }
+
+        .glyphicon-icon-lpad .glyphicon.m15, .fa-icon-lpad .fa.m15 {
+            padding-left: 15px;
+        }
+
+        ul.nav-menu-list-style .nav-header .menu-collapsible-icon {
+            position: absolute;
+            right: 3px;
+            top: 16px;
+            font-size: 9px;
+        }
+
+        ul.nav-menu-list-style {
+            margin: 0;
+        }
+
+            ul.nav-menu-list-style .nav-header {
+                border-top: 1px solid #FFFFFF;
+                border-bottom: 1px solid #e8e8e8;
+                display: block;
+                margin: 0;
+                line-height: 42px;
+                padding: 0 8px;
+                font-weight: 600;
+            }
+
+            ul.nav-menu-list-style > li {
+                position: relative;
+            }
+
+                ul.nav-menu-list-style > li a {
+                    border-top: 1px solid #FFFFFF;
+                    border-bottom: 1px solid #e8e8e8;
+                    padding: 0 10px;
+                    line-height: 32px;
+                }
+
+                ul.nav-menu-list-style > li:first-child a {
+                }
+
+
+        ul.nav-menu-list-style {
+            list-style: none;
+            padding: 0px;
+            margin: 0px;
+        }
+
+            ul.nav-menu-list-style li .badge, ul.nav-menu-list-style li .pull-right, ul.nav-menu-list-style li span.badge, ul.nav-menu-list-style li label.badge {
+                float: right;
+                margin-top: 7px;
+            }
+
+        ul.bullets {
+            list-style: inside disc
+        }
+
+        ul.numerics {
+            list-style: inside decimal
+        }
+
+        .ul.kas-icon-aero {
+        }
+
+        ul.kas-icon-aero li a:before {
+            font-family: 'Glyphicons Halflings';
+            font-size: 9px;
+            content: "\e258";
+            padding-right: 8px;
+        }
+
+        #filterPanel {
+            background-color: silver;
+            border-radius: 10px;
+            padding: 1em;
+            height: auto;
+            min-height: 70vh;
+        }
+
+        .card {
+            width: 100%;
+            border: 0.5px solid grey;
+            border-radius: 10px;
+            padding: 1em;
+            margin: 1em;
+        }
+
+        .card-img-top {
+            width: 100%;
+            height: 7em;
+        }
+
+        .card-text {
+            white-space: nowrap;
+            height: 2em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .dropbtn {
+            color: silver;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+                .dropdown-content a:hover {
+                    background-color: #ddd;
+                }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+
+
+        @@media screen and (max-width: 768px) {
+            h1 {
+                font-size: 14px;
+            }
+        }
+    </style>
+
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand item">
+                <img class="img-responsive" src="~/images/logo.png" alt="CVGS logo" style="margin-top: -0.05em;height: 40px;" />
+            </a>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">
+                    <h1 style="margin-top: -0.05em;">CVGS</h1>
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li style="padding-top: 1em;"><a asp-area="" asp-controller="Home" asp-action="Index" id="homepage-button">Home</a></li>
+                    <li style="padding-top: 1em;"><a asp-area="" asp-controller="Games" asp-action="Index" id="gamespage-button">Games</a></li>
+                    <li style="padding-top: 1em;"><a asp-area="" asp-controller="Events" asp-action="Index" id="eventspage-button">Events</a></li>
+                </ul>
+                @await Html.PartialAsync("_LoginPartial")
+            </div>
+        </div>
+    </nav>
+
+
+
+    <div id="content">
+        <div class="container body-content">
+            <p class="text-danger">@TempData["message"]</p>
+            @RenderBody()
+            <hr />
+            <footer>
+                <nav class="navbar">
+                    <div class="container-fluid">
+                        <ul class="nav navbar-nav">
+                            <li><a href="mailto:singithikandage@gmail.com?Subject=Contact">&copy; 2019 - Team Boom II </a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </footer>
+        </div>
+    </div>
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <script>
+            $('.tree-toggle').click(function () {
+                $(this).parent().children('ul.tree').toggle(200);
+            });
+            $(function () {
+                $('.tree-toggle').parent().children('ul.tree').toggle(200);
+            })
+        </script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

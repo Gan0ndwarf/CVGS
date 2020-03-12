@@ -1,0 +1,74 @@
+﻿@model Order;
+@{
+    ViewData["Title"] = "My Order Details";
+}
+
+<div class="container">
+    <div class="row">
+        <h1>@ViewData["Title"]</h1>
+    </div>
+</div>
+<div class="container no-padding">
+    <div class="row">
+        <div class="col-md-3">
+            @await Html.PartialAsync("_MemberAccountNavBar")
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <dl class="dl-horizontal" style="text-align:left;">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Game.Category)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Game.Category.Category)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Game.Platform)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Game.Platform.Platform)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Game.ReleaseDate)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Game.ReleaseDate)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Game.Description)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Game.Description)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Game.Developer)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Game.Developer)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Game.Price)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Game.Price)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Date)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Date)
+                    </dd>
+                </dl>
+
+
+                <a asp-action="MyGames">Back to my Games</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

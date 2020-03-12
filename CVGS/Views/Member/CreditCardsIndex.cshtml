@@ -1,0 +1,48 @@
+﻿@model IEnumerable<CVGS.Models.UserCreditCard>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="CreditCardsCreate" id="createcard">Add New Card</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CreditCardType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreditCardNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NameOnCard)
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreditCardType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreditCardNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameOnCard)
+            </td>
+        
+            <td>
+               
+                <a asp-action="CreditCardsDelete" asp-route-id="@item.Id" id="deletecard">Remove</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

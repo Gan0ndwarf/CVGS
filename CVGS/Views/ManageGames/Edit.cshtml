@@ -1,0 +1,94 @@
+﻿@model CVGS.Models.Game
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+@using Microsoft.AspNetCore.Http
+@{
+    if (Context.Session.GetString("isEmp") == "True")
+    {
+        <div class="container">
+            <div class="row">
+                <h1 id="editgames-header">@ViewData["Title"]</h1>
+            </div>
+        </div>
+        <div class="container no-padding">
+            <div class="row">
+                <div class="col-md-3">
+                    @await Html.PartialAsync("_AdminPortalNavBar")
+                </div>
+                <div class="col-md-9">
+                    <h4>Game</h4>
+                    <hr />
+                    <div class="row">
+                        <div>
+                            <form asp-action="Edit">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="GameId" />
+                                <div class="form-group">
+                                    <label asp-for="CategoryId" class="control-label"></label>
+                                    <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryList"></select>
+                                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="PlatformId" class="control-label"></label>
+                                    <select asp-for="PlatformId" class="form-control" asp-items="ViewBag.PlatformList"></select>
+                                    <span asp-validation-for="PlatformId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Name" class="control-label"></label>
+                                    <input asp-for="Name" class="form-control" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="ReleaseDate" class="control-label"></label>
+                                    <input asp-for="ReleaseDate" class="form-control" />
+                                    <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Description" class="control-label"></label>
+                                    <input asp-for="Description" class="form-control" />
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Price" class="control-label"></label>
+                                    <input asp-for="Price" class="form-control" />
+                                    <span asp-validation-for="Price" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Developer" class="control-label"></label>
+                                    <input asp-for="Developer" class="form-control" />
+                                    <span asp-validation-for="Developer" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="ImgLocation" class="control-label"></label>
+                                    <input asp-for="ImgLocation" class="form-control" />
+                                    <span asp-validation-for="ImgLocation" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Save" class="btn btn-default" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div>
+                        <a asp-action="Index">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <h1>Forbidden</h1>
+        <p>You are not authorized to access this feature of the website.</p>
+        <a asp-controller="Home" asp-action="Index">Back to Home</a>
+    }
+}
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

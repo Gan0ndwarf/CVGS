@@ -1,0 +1,83 @@
+﻿@model IEnumerable<CVGS.Models.Game>
+@{
+    ViewData["Title"] = "Manage Games";
+}
+
+@using Microsoft.AspNetCore.Http
+@{
+    if (Context.Session.GetString("isEmp") == "True")
+    {
+        <div class="container">
+            <div class="row">
+                <h1 id="managegames-header">@ViewData["Title"]</h1>
+            </div>
+        </div>
+        <div class="container no-padding">
+            <div class="row">
+                <div class="col-md-3">
+                    @await Html.PartialAsync("_AdminPortalNavBar")
+                </div>
+                <div class="col-md-9">
+                    <p>
+                        <a asp-action="Create" id="create-link">Create New</a>
+                    </p>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Platform</th>
+                                <th>Overall Rating</th>
+                                <th>Price</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Category.Category)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Platform.Platform)
+                                    </td>
+                                    <td>
+                                        @if (item.Rating != null)
+                                        {
+                                            @Html.DisplayFor(modelItem => item.Rating)
+                                        }
+                                        else
+                                        {
+                                            <span style="font-style:italic;">Unrated</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Price)
+                                    </td>
+                                    <td>
+                                        <a asp-action="Details" asp-route-id="@item.GameId" id="detailslink-@item.GameId">Details</a> |
+                                        <a asp-action="Edit" asp-route-id="@item.GameId" id="editlink-@item.GameId">Edit</a> |
+                                        <a asp-action="Delete" asp-route-id="@item.GameId" id="deletelink-@item.GameId">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <h1>Forbidden</h1>
+        <p>You are not authorized to access this feature of the website.</p>
+        <a asp-controller="Home" asp-action="Index">Back to Home</a>
+    }
+}
+
+
+

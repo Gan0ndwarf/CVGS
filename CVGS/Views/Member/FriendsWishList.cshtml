@@ -1,0 +1,46 @@
+﻿@model IEnumerable<CVGS.Models.UserGameWishList>
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+
+<div class="container">
+    <div class="row">
+        <h1>@ViewData["Title"]</h1>
+    </div>
+</div>
+<div class="container no-padding">
+    <div class="row">
+        <div class="col-md-3">
+            @await Html.PartialAsync("_MemberAccountNavBar")
+        </div>
+        <div class="col-md-9">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Game Name
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Game.Name)
+                            </td>
+                            <td>
+                                <a asp-controller="Games" asp-action="Details" asp-route-gameId="@item.GameId" asp-route-userId="@UserManager.GetUserId(User)">Details</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @if (Model.Count<CVGS.Models.UserGameWishList>() == 0)
+            {
+                <p style="font-style: italic;">Your friend has no items on their wishlist.</p>
+            }
+            <br />
+            <a asp-action="FriendsFamily">Back to Friends and Family</a>
+        </div>
+    </div>
+</div>

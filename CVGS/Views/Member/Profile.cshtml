@@ -1,0 +1,104 @@
+﻿@model User
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<div class="container">
+    <div class="row">
+        <h1 id="profile-header">@ViewData["Title"]</h1>
+    </div>
+</div>
+<div class="container no-padding">
+    <div class="row">
+        <div class="col-md-3">
+            @await Html.PartialAsync("_MemberAccountNavBar")
+        </div>
+        <div class="col-md-9">
+            <form asp-action="Profile" asp-route-id="@UserManager.GetUserId(User)">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <h4>Account Information</h4>
+                <input asp-for="UserId" class="form-control" type="hidden" />
+                <input asp-for="EmployeeFlag" class="form-control" type="hidden" />
+
+                <hr />
+                <div class="form-group">
+                    <label asp-for="Username"></label>
+                    <input asp-for="Username" class="form-control" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input asp-for="PasswordHashed" class="form-control" type="hidden" />
+                    <input class="form-control" type="password" value="**********" readonly />
+                </div>
+                <div class="form-group">
+                    <button  asp-controller="Account" asp-action="ChangePassword" class="form-control btn btn-info" style="width:25%;">
+                        Change Password
+                    </button>
+                </div>
+
+                <br />
+                <h4>Personal Information</h4>
+                <hr />
+                <div class="form-group">
+                    <label asp-for="FirstName"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="GenderId"></label>
+                    <select asp-for="GenderId" class="form-control" asp-items="ViewBag.GenderList"></select>
+                    <span asp-validation-for="GenderId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label> Birth Date</label>
+                    <input asp-for="Dob" class="form-control" />
+                    <span asp-validation-for="Dob" class="text-danger"></span>
+                </div>
+
+                <br />
+                <h4>Contact</h4>
+                <hr />
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Phone"></label>
+                    <input asp-for="Phone" class="form-control" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+
+                <br />
+                <h4>Promotional Emails</h4>
+                <hr />
+                <div class="form-check">
+                    <input asp-for="EmailFlag" type="checkbox" class="form-check-input">
+                    <label class="form-check-label">I wish to be added to promotional emails</label>
+                    <span asp-validation-for="EmailFlag" class="text-danger"></span>
+                </div>
+
+                <br />
+                <h4>Privacy</h4>
+                <hr />
+                <div class="form-check">
+                    <input asp-for="PrivateFlag" type="checkbox" class="form-check-input">
+                    <label class="form-check-label">My wishlist is accessible to friends and family only</label>
+                    <span asp-validation-for="PrivateFlag" class="text-danger"></span>
+                </div>
+
+                <input asp-for="Salt" class="form-control" type="hidden" />
+
+                <br />
+                <button type="submit" class="btn btn-info">Save Changes</button>
+            </form>
+        </div>
+    </div>
+</div>

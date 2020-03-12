@@ -1,0 +1,34 @@
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+
+<div class="well no-padding">
+    <div>
+        <ul class="nav nav-list nav-menu-list-style">
+            <li>
+                <label class="tree-toggle nav-header glyphicon-icon-rpad">
+                    Administration Portal
+                </label>
+                <ul class="nav nav-list tree bullets">
+                    <li><a asp-controller="ManageGames" asp-action="Index" id="managegames-link">Manage Games</a></li>
+                    <li><a asp-controller="ManageEvents" asp-action="Index"  id="manageevents-link">Manage Events</a></li>
+                    <li><a asp-controller="ManageReviews" asp-action="Index"  id="managereviews-link">Manage Reviews</a></li>
+                </ul>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <label class="tree-toggle nav-header glyphicon-icon-rpad">
+                    Reporting
+                </label>
+                <ul class="nav nav-list tree bullets">
+                    <li><a asp-controller="GameReports" asp-action="Index" id="gamereports-link">Game Reports</a></li>
+                    <li><a asp-controller="GameDetailsReports" asp-action="Index" id="gamedetailsreports-link">Game Details Reports</a></li>
+                    <li><a asp-controller="GameReviewsReports" asp-action="Index" id="gamereviewreports-link">Game Reviews Reports</a></li>
+                    <li><a asp-controller="MemberReports" asp-action="Index" id="memberreports-link">Member Reports</a></li>
+                    <li><a asp-controller="MemberDetailsReports" asp-action="Index" id="memberdetailsreports-link">Member Details Reports</a></li>
+                    <li><a asp-controller="WishListsReports" asp-action="Index" id="wishlistsreports-link">Wish List Reports</a></li>
+                    <li><a asp-controller="OrderReports" asp-action="Index" id="salesreports-link">Sales Reports</a></li>
+
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

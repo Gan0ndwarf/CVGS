@@ -1,0 +1,48 @@
+﻿@model UserEvent;
+@{
+    ViewData["Title"] = "Event Details";
+}
+
+<div class="container">
+    <div class="row">
+        <h1>@ViewData["Title"]</h1>
+    </div>
+</div>
+<div class="container no-padding">
+    <div class="row">
+        <div class="col-md-3">
+            @await Html.PartialAsync("_MemberAccountNavBar")
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <dl class="dl-horizontal" style="text-align:left;">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Event)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Event.Name)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Event.Date)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Event.Date)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Event.Time)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Event.Time)
+                    </dd>
+                </dl>
+
+                <a asp-action="MyEvents">Back to My Events</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

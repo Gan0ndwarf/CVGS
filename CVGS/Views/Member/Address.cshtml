@@ -1,0 +1,123 @@
+﻿@model AddressModel
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Address";
+}
+
+<div class="container">
+    <div class="row">
+        <h1 id="address-header">@ViewData["Title"]</h1>
+    </div>
+</div>
+<div class="container no-padding">
+    <div class="row">
+        <div class="col-md-3">
+            @await Html.PartialAsync("_MemberAccountNavBar")
+        </div>
+        <div class="col-md-9">
+            <form asp-action="Address">
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <h4>Home Address</h4>
+                <hr />
+                <input asp-for="HomeAddress.Id" class="form-control" type="hidden"/>
+                <input asp-for="HomeAddress.UserId" class="form-control" value="@UserManager.GetUserId(User)" type="hidden"/>
+                <input asp-for="HomeAddress.MailingFlag" class="form-control" value="@false" readonly type="hidden"/>
+                <div class="form-group">
+                    <label asp-for="HomeAddress.Address1"></label>
+                    <input asp-for="HomeAddress.Address1" class="form-control" id="hAddress1"/>
+                    <span asp-validation-for="HomeAddress.Address1" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="HomeAddress.Address2"></label>
+                    <input asp-for="HomeAddress.Address2" class="form-control" id="hAddress2"/>
+                    <span asp-validation-for="HomeAddress.Address1" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="HomeAddress.City"></label>
+                    <input asp-for="HomeAddress.City" class="form-control" id="hCity"/>
+                    <span asp-validation-for="HomeAddress.City" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MailingAddress.ProvinceId"></label>
+                    <select asp-for="MailingAddress.ProvinceId" class="form-control" asp-items="ViewBag.ProvinceList"></select>
+                    <span asp-validation-for="MailingAddress.ProvinceId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="HomeAddress.CountryId"></label>
+                    <select asp-for="HomeAddress.CountryId" class="form-control" asp-items="ViewBag.CountryList" id="hCountry"></select>
+                    <span asp-validation-for="HomeAddress.CountryId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="HomeAddress.PostalZipCode"></label>
+                    <input asp-for="HomeAddress.PostalZipCode" class="form-control" id="hZipCode" />
+                    <span asp-validation-for="HomeAddress.PostalZipCode" class="text-danger"></span>
+                </div>
+
+                <script>
+                    function myFunction() {
+                        var hAddress1 = $('#hAddress1').val();
+                        var hAddress2 = $('#hAddress2').val();
+                        var hCity = $('#hCity').val();
+                        var hProvince = $('#hProvince').val();
+                        var hCountry = $('#hCountry').val();
+                        var hZipCode = $('#hZipCode').val();
+
+                        $('#mAddress1').val(hAddress1);
+                        $('#mAddress2').val(hAddress2);
+                        $('#mCity').val(hCity);
+                        $('#mProvince').val(hProvince);
+                        $('#mCountry').val(hCountry);
+                        $('#mZipCode').val(hZipCode);
+                    }
+                </script>
+
+
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="mailingSameCheckbox" onclick="myFunction()">
+                    <label class="form-check-label">Mailing address same as home address</label>
+                </div>
+
+                <br />
+
+                <h4>Mailing Address</h4>
+                <hr />
+                <input asp-for="MailingAddress.Id" class="form-control" type="hidden"/>
+                <input asp-for="MailingAddress.UserId" class="form-control" value="@UserManager.GetUserId(User)" type="hidden"/>
+                <input asp-for="MailingAddress.MailingFlag" class="form-control" value="@true"  type="hidden" readonly/>
+                <div class="form-group">
+                    <label asp-for="MailingAddress.Address1"></label>
+                    <input asp-for="MailingAddress.Address1" class="form-control" id="mAddress1" />
+                    <span asp-validation-for="MailingAddress.Address1" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MailingAddress.Address2"></label>
+                    <input asp-for="MailingAddress.Address2" class="form-control" id="mAddress2" />
+                    <span asp-validation-for="MailingAddress.Address1" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MailingAddress.City"></label>
+                    <input asp-for="MailingAddress.City" class="form-control" id="mCity" />
+                    <span asp-validation-for="MailingAddress.City" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MailingAddress.ProvinceId"></label>
+                    <select asp-for="MailingAddress.ProvinceId" class="form-control" asp-items="ViewBag.ProvinceList"></select>
+                    <span asp-validation-for="MailingAddress.ProvinceId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MailingAddress.CountryId"></label>
+                    <select asp-for="MailingAddress.CountryId" class="form-control" asp-items="ViewBag.CountryList"></select>
+                    <span asp-validation-for="MailingAddress.CountryId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MailingAddress.PostalZipCode"></label>
+                    <input asp-for="MailingAddress.PostalZipCode" class="form-control" id="mZipCode" />
+                    <span asp-validation-for="MailingAddress.PostalZipCode" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-info">Save Changes</button>
+            </form>
+        </div>
+    </div>
+</div>

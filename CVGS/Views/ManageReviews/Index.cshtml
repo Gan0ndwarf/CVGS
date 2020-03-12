@@ -1,0 +1,77 @@
+﻿@model IEnumerable<CVGS.Models.Review>
+@{
+    ViewData["Title"] = "Manage Reviews";
+}
+
+
+@using Microsoft.AspNetCore.Http
+@{
+    if (Context.Session.GetString("isEmp") == "True")
+    {
+        <div class="container">
+            <div class="row">
+                <h1 id="managereviews-header">@ViewData["Title"]</h1>
+            </div>
+        </div>
+        <div class="container no-padding">
+            <div class="row">
+                <div class="col-md-3">
+                    @await Html.PartialAsync("_AdminPortalNavBar")
+                </div>
+                <div class="col-md-9">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Game</th>
+                                <th>Review</th>
+                                <th>Rating</th>
+                                <th>Date</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Username)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Game.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Review1)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Rating)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Date)
+                                    </td>
+                                    <td>
+                                        <a asp-action="ApproveReview" asp-route-gameId="@item.GameId" asp-route-userId="@item.UserId" id="approvereview-@item.Id">Approve Review</a> |
+                                        <a asp-action="RejectReview" asp-route-gameId="@item.GameId" asp-route-userId="@item.UserId" id="rejectreview-@item.Id">Reject Review</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @if (Model.Count<CVGS.Models.Review>() == 0)
+                    {
+                        <p style="font-style: italic;">Your have no reviews for approval.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <h1>Forbidden</h1>
+        <p>You are not authorized to access this feature of the website.</p>
+        <a asp-controller="Home" asp-action="Index">Back to Home</a>
+    }
+}
+
+
+

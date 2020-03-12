@@ -1,0 +1,67 @@
+﻿@model IEnumerable<CVGS.Models.Event>
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Events";
+}
+
+<h1 id="eventspage-header">@ViewData["Title"]</h1>
+<div class="container no-padding">
+    <div class="row">
+        @if (Context.Session.GetString("userId") == null)
+        {
+            <p>You need to be logged in to register for Events.</p>
+            <a asp-controller="Account" asp-action="Login">Login here</a>
+        }
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Description</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Time)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @if (Context.Session.GetString("userId") != null)
+                                {
+                                    <a class="btn btn-info" asp-action="Register" asp-route-eventId="@item.EventId" asp-route-userId="@UserManager.GetUserId(User)" id="register-button">Register</a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-default" disabled>Register</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @if (Model.Count<CVGS.Models.Event>() == 0)
+            {
+                <p style="font-style: italic;">We have no events for you to register for currently.</p>
+            }
+        </div>
+    </div>
+</div>
+
+

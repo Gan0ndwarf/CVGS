@@ -1,0 +1,60 @@
+﻿@model IEnumerable<CVGS.Models.UserEvent>
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "My Events";
+}
+
+<div class="container">
+    <div class="row">
+        <h1 id="myevents-header">@ViewData["Title"]</h1>
+    </div>
+</div>
+<div class="container no-padding">
+    <div class="row">
+        <div class="col-md-3">
+            @await Html.PartialAsync("_MemberAccountNavBar")
+        </div>
+        <div class="col-md-9">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Event</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Event.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Event.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Event.Time)
+                        </td>
+                        <td>
+                            <a asp-action="EventDetails" asp-route-eventId="@item.EventId" asp-route-userId="@UserManager.GetUserId(User)">Details</a> |
+                            <a asp-action="DeleteEvent" asp-route-eventId="@item.EventId" asp-route-userId="@UserManager.GetUserId(User)">Delete</a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            @if (Model.Count<CVGS.Models.UserEvent>() == 0)
+            {
+                <p style="font-style: italic;">Your have no registered events.</p>
+                <br />
+                <p>Can't find any events you like? Check out our <a asp-controller="Events" asp-action="Index">Events page</a> for fun events to participate in.</p>
+            }
+            else
+            {
+                <p>Check out our <a asp-controller="Events" asp-action="Index">Events page</a> for fun events to participate in.</p>
+            }
+        </div>
+    </div>
+</div>

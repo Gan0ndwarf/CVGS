@@ -1,0 +1,87 @@
+﻿@model CVGS.Models.UserCreditCard
+
+@{
+    ViewData["Title"] = "Create";
+}
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+<h2>Create</h2>
+
+<h4>UserCreditCard</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreditCardsCreate">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+
+                <input type="hidden" asp-for="UserId" value="@UserManager.GetUserId(User)"></input>
+            </div>
+            <div class="form-group">
+                <div class="form-group" id="credit_cards">
+                    <img src="/images/visa.jpg" id="visa">
+                    <img src="/images/mastercard.jpg" id="mastercard">
+                    <img src="/images/amex.jpg" id="amex">
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreditCardNumber" class="control-label"></label>
+                <input asp-for="CreditCardNumber" minlength="15" maxlength="16" class="form-control" id="cardnumber" />
+                <span asp-validation-for="CreditCardNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SecurityCode" class="control-label"></label>
+                <input asp-for="SecurityCode" minlength="3" maxlength="3" class="form-control" id="code" />
+                <span asp-validation-for="SecurityCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExpirationDate" class="control-label"></label>
+                <input asp-for="ExpirationDate" type="month" class="form-control" id="ExpDate" />
+                <span asp-validation-for="ExpirationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NameOnCard" class="control-label">Name on card</label>
+                <input asp-for="NameOnCard" class="form-control" id="name" />
+                <span asp-validation-for="NameOnCard" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address1" class="control-label">Address 1</label>
+                <input asp-for="Address1" class="form-control" id="address" />
+                <span asp-validation-for="Address1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address2" class="control-label">Address 2</label>
+                <input asp-for="Address2" class="form-control" />
+                <span asp-validation-for="Address2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" id="city" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProvinceId" class="control-label"></label>
+                <select asp-for="ProvinceId" class="form-control" asp-items="ViewBag.ProvinceId" id="province"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="CountryId" class="control-label"></label>
+                <select asp-for="CountryId" class="form-control" asp-items="ViewBag.CountryId" id="country"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="PostalZipCode" class="control-label"></label>
+                <input asp-for="PostalZipCode" class="form-control" id="zip" />
+                <span asp-validation-for="PostalZipCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" id="submit" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="CreditCardsIndex">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

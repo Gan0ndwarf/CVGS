@@ -1,0 +1,66 @@
+﻿@model PreferencesModel
+@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Preferences";
+}
+
+<div class="container">
+    <div class="row">
+        <h1 id="preferences-header">@ViewData["Title"]</h1>
+    </div>
+</div>
+<div class="container no-padding">
+    <div class="row">
+        <div class="col-md-3">
+            @await Html.PartialAsync("_MemberAccountNavBar")
+        </div>
+        <div class="col-md-9">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Favourite Platforms</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <a asp-action="AddPlatformPreference" asp-route-userId="@UserManager.GetUserId(User)">Add Favourite Platform</a>
+                    @foreach (var item in Model.FavouritePlatforms)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Platform.Platform)
+                            </td>
+                            <td>
+                                <a asp-action="DeletePlatformPreference" asp-route-userId="@UserManager.GetUserId(User)" asp-route-platformId="@item.PlatformId">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Favourite Categories</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <a asp-action="AddCategoryPreference" asp-route-userId="@UserManager.GetUserId(User)">Add Favourite Category</a>
+                    @foreach (var item in Model.FavouriteGameCategories)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Category.Category)
+                            </td>
+                            <td>
+                                <a asp-action="DeleteCategoryPreference" asp-route-userId="@UserManager.GetUserId(User)" asp-route-categoryId="@item.CategoryId">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
